@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
+export const API = "https://fitness-project-mxqn.onrender.com";
 
 export async function register(firstName, lastName, phone, password) {
   const res = await fetch(`${API}/api/register`, {
