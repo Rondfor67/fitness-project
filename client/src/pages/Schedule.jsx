@@ -58,7 +58,7 @@ function Schedule() {
   const fetchTrainings = async () => {
   setLoading(true);
 
-  const res = awaitfetch(`${API}/api/trainings`);
+  const res = await fetch(`${API}/api/trainings`);
   const data = await res.json();
   setTrainings(data);
 
