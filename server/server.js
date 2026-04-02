@@ -12,6 +12,7 @@ app.use(express.json());
 require("dotenv").config();
 
 const SECRET = process.env.JWT_SECRET;
+console.log("MONGO:", process.env.MONGO_URI);
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
