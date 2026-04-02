@@ -12,7 +12,7 @@ app.use(express.json());
 require("dotenv").config();
 
 const SECRET = process.env.JWT_SECRET;
-mongoose.connect("mongodb+srv://Dina:Qwerty123@cluster0.dscxges.mongodb.net/fitness?retryWrites=true&w=majority")
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
