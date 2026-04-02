@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getUser } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
-
+import { API } from "../api";
 
 const TRAINERS = [
   "Алина",
@@ -68,7 +68,7 @@ function Individual() {
   setLoading(true);
 
   try {
-    const res = await fetch("http://localhost:5000/api/trainers");
+    const res = await fetch(`${API}/api/trainers`);
     const data = await res.json();
     setTrainers(data);
   } catch (err) {
@@ -129,7 +129,7 @@ function Individual() {
     }
     const uniqueSlots = [...new Set(slotsArray)];
 
-    await fetch("http://localhost:5000/api/trainers", {
+    await fetch(`${API}/api/trainers`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -173,7 +173,7 @@ function Individual() {
       return;
     }
 
-    const res = await fetch(`http://localhost:5000/api/trainers/${id}/book`, {
+    const res = await fetch(`${API}/api/trainers/${id}/book`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -202,7 +202,7 @@ function Individual() {
   const deleteTrainer = async (id) => {
   if (!window.confirm("Удалить тренировку?")) return;
 
-  await fetch(`http://localhost:5000/api/trainers/${id}`, {
+  await fetch(`${API}/api/trainers/${id}`, {
     method: "DELETE"
   });
 
@@ -226,7 +226,7 @@ const editTrainer = async (t) => {
 
   const date = prompt("Дата (YYYY-MM-DD)", t.date);
 
-  await fetch(`http://localhost:5000/api/trainers/${t._id}`, {
+  await fetch(`${API}/api/trainers/${t._id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"

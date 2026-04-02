@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getUser } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import { API } from "../api";
 
 const TRAINING_TYPES = [
   "Fly yoga",
@@ -57,7 +58,7 @@ function Schedule() {
   const fetchTrainings = async () => {
   setLoading(true);
 
-  const res = await fetch("http://localhost:5000/api/trainings");
+  const res = awaitfetch(`${API}/api/trainings`);
   const data = await res.json();
   setTrainings(data);
 
@@ -114,7 +115,7 @@ if (isToday && diffHours < 3) {
   return;
 }
 
-    const res = await fetch("http://localhost:5000/api/trainings", {
+    const res = await fetch(`${API}/api/trainings`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -165,8 +166,7 @@ if (!res.ok) {
       return;
     }
 
-    const res = await fetch(
-      `http://localhost:5000/api/trainings/${t._id}/join`,
+    const res = await fetch(`${API}/api/trainings/${t._id}/join`,
       {
         method: "POST",
         headers: {
@@ -190,7 +190,7 @@ if (!res.ok) {
   const deleteTraining = async (id) => {
     if (!window.confirm("Удалить тренировку?")) return;
 
-    await fetch(`http://localhost:5000/api/trainings/${id}`, {
+    await fetch(`${API}/api/trainings/${id}`, {
       method: "DELETE"
     });
 
@@ -211,7 +211,7 @@ if (!res.ok) {
     const time = prompt("Время", t.time);
     const date = prompt("Дата (YYYY-MM-DD)", t.date);
 
-    await fetch(`http://localhost:5000/api/trainings/${t._id}`, {
+    await fetch(`${API}/api/trainings/${t._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"

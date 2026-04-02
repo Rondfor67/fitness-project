@@ -1,7 +1,7 @@
-const API = "http://localhost:5000/api";
+const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 export async function register(firstName, lastName, phone, password) {
-  const res = await fetch(API + "/register", {
+  const res = await fetch(`${API}/api/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ firstName, lastName, phone, password })
@@ -11,7 +11,7 @@ export async function register(firstName, lastName, phone, password) {
 }
 
 export async function login(phone, password) {
-  const res = await fetch(API + "/login", {
+  const res = await fetch(`${API}/api/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ phone, password })

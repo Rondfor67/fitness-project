@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { getUser, logout } from "../services/auth";
 import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
+import { API } from "../api";
 
 function Profile() {
   const navigate = useNavigate();
@@ -16,9 +17,7 @@ function Profile() {
   }, []);
 
   const fetchBookings = async () => {
-    const res = await fetch(
-      `http://localhost:5000/api/my-bookings/${user.id}`
-    );
+    const res = await fetch(`${API}/api/my-bookings/${user.id}`);
     const data = await res.json();
     setBookings(data);
   };

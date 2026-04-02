@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../services/auth";
 import NavBar from "../components/NavBar";
+import { API } from "../api";
 
 function MyBookings() {
   const [bookings, setBookings] = useState([]);
@@ -25,9 +26,7 @@ function MyBookings() {
   }, []);
 
   const fetchBookings = async () => {
-    const res = await fetch(
-      `http://localhost:5000/api/my-bookings/${user.id}`
-    );
+    const res = await fetch(`${API}/api/my-bookings/${user.id}`);
     const data = await res.json();
     setBookings(data);
   };
@@ -80,8 +79,7 @@ return (
                       className="cancel-btn"
                       onClick={async () => {
                         try {
-                          const res = await fetch(
-                            `http://localhost:5000/api/bookings/${b._id}`,
+                          const res = await fetch(`${API}/api/bookings/${b._id}`,
                             { method: "DELETE" }
                           );
 

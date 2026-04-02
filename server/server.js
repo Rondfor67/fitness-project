@@ -12,11 +12,9 @@ app.use(express.json());
 require("dotenv").config();
 
 const SECRET = process.env.JWT_SECRET;
-
-mongoose.connect("mongodb://127.0.0.1:27017/fitness")
-  .then(() => console.log("MongoDB OK"))
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
-
 
 // USER
 const User = mongoose.model("User", {
