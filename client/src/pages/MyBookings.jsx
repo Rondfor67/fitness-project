@@ -15,6 +15,15 @@ function MyBookings() {
       navigate("/login");
       return;
     }
+  useEffect(() => {
+    if (!message) return;
+  
+    const timer = setTimeout(() => {
+      setMessage("");
+    }, 3000);
+  
+    return () => clearTimeout(timer);
+    }, [message]);
 
     if (user.role === "admin") {
       setMessage("Данная функция доступна только пользователям");
