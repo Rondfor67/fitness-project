@@ -143,7 +143,15 @@ app.delete("/api/bookings/:id", async (req, res) => {
     });
   }
 
-  await Booking.findByIdAndDelete(req.params.id);
+  const trainer = await Trainer.findById(booking.trainerId);
+
+  if (trainer) {
+    trainer.availableSlots.push(booking.time);
+    await trainer.save();
+  }
+
+  // удаляем запись
+  await booking.deleteOne();
 
   res.json({ message: "Отменено" });
 });

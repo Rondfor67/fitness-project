@@ -100,6 +100,7 @@ return (
                           }
 
                           setMessage("Запись отменена");
+                          window.location.reload();
                           fetchBookings();
                         } catch {
                           setMessage("Ошибка");
