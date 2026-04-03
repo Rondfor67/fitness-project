@@ -15,24 +15,24 @@ function MyBookings() {
       navigate("/login");
       return;
     }
-  useEffect(() => {
-    if (!message) return;
-  
-    const timer = setTimeout(() => {
-      setMessage("");
-    }, 3000);
-  
-    return () => clearTimeout(timer);
-    }, [message]);
+  if (user.role === "admin") {
+    setMessage("Данная функция доступна только пользователям");
+    navigate("/profile");
+    return;
+  }
 
-    if (user.role === "admin") {
-      setMessage("Данная функция доступна только пользователям");
-      navigate("/profile");
-      return;
-    }
+  fetchBookings();
+}, []);
 
-    fetchBookings();
-  }, []);
+useEffect(() => {
+  if (!message) return;
+
+  const timer = setTimeout(() => {
+    setMessage("");
+  }, 3000);
+
+  return () => clearTimeout(timer);
+}, [message]);
 
   const fetchBookings = async () => {
     const res = await fetch(`${API}/api/my-bookings/${user.id}`);
