@@ -113,6 +113,7 @@ app.post("/api/trainings/:id/join", async (req, res) => {
 
   const booking = new Booking({
     userId,
+    trainingId: training._id, 
     trainerName: training.title,
     type: "Групповая",
     date: training.date,
@@ -260,6 +261,7 @@ app.post("/api/trainers/:id/book", async (req, res) => {
   // создаём запись
   const booking = new Booking({
     userId,
+    trainerId: trainer._id,
     trainerName: trainer.name,
     type: trainer.type,
     date: trainer.date,
