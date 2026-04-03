@@ -100,7 +100,7 @@ app.post("/api/trainings/:id/join", async (req, res) => {
     return res.status(404).json({ message: "Нет тренировки" });
   }
 
-  if (training.participants.includes(userId)) {
+  if (training.participants.some(id => id.toString() === userId)) {
     return res.status(400).json({ message: "Ты уже записан" });
   }
 
@@ -184,6 +184,7 @@ const Trainer = mongoose.model("Trainer", {
 // BOOKINGS
 const Booking = mongoose.model("Booking", {
   userId: String,
+  trainingId: mongoose.Schema.Types.ObjectId,
   trainerId: mongoose.Schema.Types.ObjectId,
   trainerName: String,
   type: String,
