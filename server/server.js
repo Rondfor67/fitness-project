@@ -124,7 +124,6 @@ app.post("/api/trainings/:id/join", async (req, res) => {
 
   res.json(training);
 });
-
 app.delete("/api/bookings/:id", async (req, res) => {
   const booking = await Booking.findById(req.params.id);
 
@@ -143,14 +142,28 @@ app.delete("/api/bookings/:id", async (req, res) => {
     });
   }
 
-  const trainer = await Trainer.findById(booking.trainerId);
+  if (booking.trainingId) {
+    const training = await Training.findById(booking.trainingId);
 
-  if (trainer) {
-    trainer.availableSlots.push(booking.time);
-    await trainer.save();
+    if (training) {
+      training.participants = training.participants.filter(
+        (id) => id.toString() !== booking.userId.toString()
+      );
+
+      await training.save();
+    }
   }
 
-  // удаляем запись
+  if (booking.trainerId) {
+    const trainer = await Trainer.findById(booking.trainerId);
+
+    if (trainer) {
+      trainer.availableSlots.push(booking.time);
+      await trainer.save();
+    }
+  }
+
+  // удаляем booking
   await booking.deleteOne();
 
   res.json({ message: "Отменено" });
